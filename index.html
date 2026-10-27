@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>佚名 · 你甚至找不到一丝我的痕迹</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ============ 顶栏 ============ -->
+  <header class="topbar" id="topbar">
+    <a class="back" href="javascript:void(0)" aria-label="返回">←</a>
+    <div class="titles">
+      <div class="name" id="topName" data-edit="profile.name">佚名</div>
+      <div class="count" id="topSub" data-edit="profile.title">你甚至找不到一丝我的痕迹。</div>
+    </div>
+    <div class="top-tools">
+      <button class="tool-btn" id="themeBtn" aria-label="切换夜间模式" title="日间 / 夜间">
+        <svg viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <button class="tool-btn" id="lockBtn" aria-label="编辑锁" title="解锁编辑">
+        <svg viewBox="0 0 24 24" id="lockIcon">
+          <rect x="4" y="10.5" width="16" height="10.5" rx="2.5"/>
+          <path d="M8 10.5V7a4 4 0 0 1 8 0v3.5"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ 封面 + 资料 ============ -->
+  <div class="collapse-wrap" id="collapseWrap">
+
+    <div class="banner">
+      <img src="assets/banner-2.jpeg" alt="封面">
+    </div>
+
+    <div class="profile-head">
+      <div class="avatar-row">
+        <div class="avatar">
+          <img src="assets/avatar-1.jpeg" alt="头像" id="avatarImg">
+        </div>
+        <div class="follow-wrap">
+          <span class="clock" id="clock">00:00</span>
+          <button class="follow-btn" id="followBtn" type="button">Following</button>
+        </div>
+      </div>
+
+      <div class="profile-info">
+        <h1 class="display-name" id="displayName" data-edit="profile.name">佚名</h1>
+        <div class="handle" id="handle" data-edit="profile.handle">@YiMing51</div>
+
+        <div class="stats">
+          <span><b id="statFollowing" data-edit="profile.following">1</b> Following</span>
+          <span><b id="statFollowers" data-edit="profile.followers">28k</b> Followers</span>
+        </div>
+
+        <!-- IP 属地 / 标签 -->
+        <div class="info-row" id="infoRow">
+          <span class="info-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a8 8 0 0 0-8 8c0 5.5 8 12 8 12s8-6.5 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+            <span id="profileLocation" data-edit="profile.location">雾山影</span>
+          </span>
+          <span class="info-item">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4a1 1 0 0 1 1 1v4h4a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-4v4a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1v-4H6a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1h4V4a1 1 0 0 1 1-1z"/></svg>
+            <span id="profileTag" data-edit="profile.tag">书页赛博牛郎</span>
+          </span>
+        </div>
+
+        <p class="bio" id="bio" data-edit="profile.bio">是我引诱你吗</p>
+      </div>
+    </div>
+
+    <!-- ============ 分栏 ============ -->
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+  </div>
+
+  <!-- ============ 置顶：文档跳转 ============ -->
+  <a class="pin-link" id="pinLink" href="#" target="_blank" rel="noopener">
+    <span class="pin-icon-wrap">
+      <svg class="pin-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M14.5 2.5 21.5 9.5l-2 2-1.2-1.2-3.6 3.6.4 3.1-2 2-8.1-8.1 2-2 3.1.4 3.6-3.6L12.5 4.5l2-2zM4 20l5.2-5.2"/>
+      </svg>
+    </span>
+    <span class="pin-text" id="pinText" data-edit="site.pin.text">文档跳转</span>
+    <span class="pin-arrow">›</span>
+  </a>
+
+  <!-- ============ 推文流 ============ -->
+  <main class="feed" id="feed"></main>
+  <div class="empty" id="emptyState" hidden>这个分栏还没有内容</div>
+
+  <!-- ============ 图片灯箱 ============ -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lb-tip">双指缩放 · 点空白关闭</div>
+    <button class="lb-close" id="lbClose" aria-label="关闭">×</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="上一张">‹</button>
+    <img id="lbImg" alt="">
+    <button class="lb-nav lb-next" id="lbNext" aria-label="下一张">›</button>
+    <div class="lb-count" id="lbCount">1 / 1</div>
+  </div>
+
+</div>
+
+<!-- ============ 背景音乐（用户首次点击后开始播放，无按钮） ============ -->
+<audio id="bgm" src="assets/bgm.mp3" loop preload="auto"></audio>
+
+<!-- ============ 密码弹窗 ============ -->
+<div class="modal-mask" id="pwMask" aria-hidden="true">
+  <div class="modal">
+    <h3>🔐 输入密码解锁编辑</h3>
+    <input type="password" id="pwInput" placeholder="请输入密码" autocomplete="off" inputmode="numeric">
+    <div class="pw-err" id="pwErr">密码不对，再试一次</div>
+    <div class="modal-btns">
+      <button class="mbtn ghost" id="pwCancel">取消</button>
+      <button class="mbtn primary" id="pwOk">解锁</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 编辑工具条（解锁后出现） ============ -->
+<div class="edit-bar" id="editBar">
+  <button class="ebtn primary" id="saveBtn">已自动保存</button>
+  <button class="ebtn" id="exportBtn">导出 data.js</button>
+  <button class="ebtn" id="resetBtn">恢复默认</button>
+  <button class="ebtn" id="lockBackBtn">锁定页面</button>
+</div>
+
+<div class="hint" id="hint"></div>
+
+<script src="js/data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
